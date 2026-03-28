@@ -4,10 +4,16 @@
 <meta charset="UTF-8">
 <title>Digital Bulletin Board</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="stylesheet" href="style.css">
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
+
 <div class="topbar">
   <div>Student Organization - Digital Bulletin Board</div>
   <div>
@@ -21,25 +27,17 @@
 <div id="feed" class="page active">
   <div class="container">
     <h1>Announcements</h1>
+
     <div class="flex filter-search">
-      <select id="feed-filter" onchange="setFilter(this.value)">
+      <select onchange="setFilter(this.value)">
         <option value="all">All Organizations</option>
         <option value="Central Student Government">Central Student Government</option>
-        <option value="Builders of Innovative Technologist Society">Builders of Innovative Technologist Society</option>
-		<option value="Cavite Communicators">Cavite Communicators</option>
-        <option value="Business Management Society">Business Management Society</option>
-        <option value="Circle of Hospitality and Tourism Students">Circle of Hospitality and Tourism Students</option>
-        <option value="Cavite Young Leaders for Entrepreneurship">Cavite Young Leaders for Entrepreneurship</option>
         <option value="Computer Science Clique">Computer Science Clique</option>
-        <option value="Educators' Guild for Excellence">Educators' Guild for Excellence</option>
-        <option value="Samahan ng mga Magaaral ng Sikolohiya">Samahan ng mga Magaaral ng Sikolohiya</option>
-        <option value="Young Office Professional Advocates">Young Office Professional Advocates</option>
-        <option value="Sinag-Tala">Sinag-Tala</option>
-        <option value="The Flare">The Flare</option>
-        <option value="Honor Society">Honor Society</option>
       </select>
+
       <input class="search" placeholder="Search..." oninput="renderFeed(this.value)">
     </div>
+
     <div id="feed-list"></div>
   </div>
 </div>
@@ -48,51 +46,35 @@
 <div id="submit" class="page">
   <div class="container">
     <h1>Submit Announcement</h1>
-    <p>Your submission will be reviewed by the admin before it appears on the public feed. You can paste your Facebook post link so the admin can verify it.</p>
 
-    <label>Your organization</label>
     <select id="org">
-      <option value="" disabled selected>-- Select your org --</option>
+      <option value="">Select organization</option>
       <option value="Central Student Government">Central Student Government</option>
-      <option value="Builders of Innovative Technologist Society">Builders of Innovative Technologist Society</option>
-      <option value="Business Management Society">Business Management Society</option>
-	  <option value="Cavite Communicators">Cavite Communicators</option>
-      <option value="Circle of Hospitality and Tourism Students">Circle of Hospitality and Tourism Students</option>
-      <option value="Cavite Young Leaders for Entrepreneurship">Cavite Young Leaders for Entrepreneurship</option>
       <option value="Computer Science Clique">Computer Science Clique</option>
-      <option value="Educators' Guild for Excellence">Educators' Guild for Excellence</option>
-      <option value="Samahan ng mga Magaaral ng Sikolohiya">Samahan ng mga Magaaral ng Sikolohiya</option>
-      <option value="Young Office Professional Advocates">Young Office Professional Advocates</option>
-      <option value="Sinag-Tala">Sinag-Tala</option>
-      <option value="The Flare">The Flare</option>
-      <option value="Honor Society">Honor Society</option>
     </select>
 
-    <label>Announcement Title</label>
-    <input id="title" placeholder="Announcement Title">
+    <input id="title" placeholder="Title">
+    <textarea id="body" placeholder="Content"></textarea>
+    <input id="fb" placeholder="Facebook link (optional)">
+    <input id="submittedBy" placeholder="Submitted by">
 
-    <label>Content</label>
-    <textarea id="body" placeholder="Paste or type the full announcement text..." rows="5"></textarea>
-
-    <label>Facebook post link (optional)</label>
-    <input id="fb" placeholder="https://facebook.com/...">
-
-    <label>Submitted by</label>
-    <input id="submittedBy" placeholder="Your name or officer position">
-
-	<label class="switch">
-	<input type="checkbox" id="urgent">
-	<span class="slider"></span>Mark as urgent / time-sensitive</label>
-	
-	<label class="switch">
-	<input type="checkbox" id="pinned">
-	<span class="slider"></span>Mark as pinned</label>
+    <label class="switch">
+      <input type="checkbox" id="urgent">
+      <span class="slider"></span>Mark as Urgent
+    </label>
 	
 	<br>
-	
-    <button class="btn btn-blue" onclick="submitPost()">Submit for review</button>
 
-    <h3>Live Preview:</h3>
+    <label class="switch">
+      <input type="checkbox" id="pinned">
+      <span class="slider"></span>Mark as Pinned
+    </label>
+	
+	<br>
+
+    <button class="btn submit-btn" onclick="submitPost()">Submit Announcement</button>
+
+    <h3>Preview</h3>
     <div id="preview-container"></div>
   </div>
 </div>
@@ -101,16 +83,17 @@
 <div id="admin" class="page">
   <div class="container">
     <h1>Admin Panel</h1>
+
     <div class="stats flex">
       <div class="stat-card">Total: <span id="total-count">0</span></div>
       <div class="stat-card">Pending: <span id="pending-count">0</span></div>
       <div class="stat-card">Approved: <span id="approved-count">0</span></div>
     </div>
 
-    <h3>Pending Review:</h3>
+    <h3>Pending</h3>
     <div id="admin-pending"></div>
-	<br>
-    <h3>Approved Posts:</h3>
+
+    <h3>Approved</h3>
     <div id="admin-approved"></div>
   </div>
 </div>
@@ -118,10 +101,24 @@
 <!-- POPUP -->
 <div id="popup" class="popup">
   <div class="popup-box">
-    <p id="popup-text">Message</p>
-    <button onclick="closePopup()">OK</button>
+    <p id="popup-text"></p>
   </div>
 </div>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCmF4tGQxXQhVdZb_xjNi-L51YMXL3IQX4",
+  authDomain: "digitalbulletinboard-ceff8.firebaseapp.com",
+  projectId: "digitalbulletinboard-ceff8",
+  storageBucket: "digitalbulletinboard-ceff8.firebasestorage.app",
+  messagingSenderId: "352525489205",
+  appId: "1:352525489205:web:fabbd1170449e79f180d7c",
+  measurementId: "G-RYV43KTGWK"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+</script>
 
 <script src="script.js"></script>
 </body>
