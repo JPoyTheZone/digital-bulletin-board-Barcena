@@ -53,7 +53,7 @@ function submitPost() {
     date: firebase.firestore.FieldValue.serverTimestamp()
   });
 
-  showPopup("Submitted! Waiting for admin approval.");
+  showPopup("Submitted! Waiting for admin approval.", 2500); // auto-close after 2.5s
 
   // reset form
   ["title","body","org","fb","submittedBy"].forEach(id => document.getElementById(id).value = "");
