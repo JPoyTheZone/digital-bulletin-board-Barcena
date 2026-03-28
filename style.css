@@ -1,0 +1,230 @@
+/* --- Reset & Base --- */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f5f6fa;
+}
+h2,h3,h4 { margin:0; }
+
+/* --- Top Navigation --- */
+.topbar {
+  background: #064635;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+.topbar div:first-child { font-weight: bold; font-size: 1.2em; }
+.topbar button {
+  background: transparent;
+  color: #ffc221;
+  border: none;
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 1em;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.topbar button:hover { background: #3b82f6; }
+.topbar button.active { background: #3b82f6; }
+
+/* --- Pages --- */
+.page { display: none; padding: 20px; animation: fadeIn 0.3s; }
+.page.active { display: block; }
+@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+
+/* --- Container --- */
+.container { max-width: 900px; margin: auto; }
+
+/* --- Feed Cards --- */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  border-left: 4px solid transparent;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: 0.3s;
+
+  /* Wrap long content */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.card:hover { box-shadow: 0 6px 15px rgba(0,0,0,0.12); }
+
+.card .card-tags { margin-bottom: 8px; }
+
+.card p {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* --- Pinned & Urgent Posts --- */
+.card.pinned { border-left-color: #f59e0b; }
+.card.urgent { border-left-color: #ef4444; }
+
+.tag {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-right: 5px;
+  display: inline-block;
+  font-weight: bold;
+  color: #fff;
+}
+.tag.urgent { background: #ef4444; }
+.tag.pinned { background: #f59e0b; }
+
+/* --- Custom Checkbox --- */
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+  font-size: 14px;
+  gap: 8px;
+  user-select: none;
+}
+.custom-checkbox input { display: none; }
+.custom-checkbox .checkmark {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #555;
+  border-radius: 4px;
+  position: relative;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+/* --- Toggle Switch --- */
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+  font-size: 14px;
+  user-select: none;
+}
+.switch input { display: none; }
+.slider {
+  position: relative;
+  width: 40px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 20px;
+  transition: 0.3s;
+  flex-shrink: 0;
+}
+.slider::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 2px;
+  top: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+.switch input:checked + .slider { background-color: #007BFF; }
+.switch input:checked + .slider::before { transform: translateX(20px); }
+
+/* --- Form Elements --- */
+input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1em;
+}
+input:focus, textarea:focus, select:focus { outline: none; border-color: #3b82f6; }
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.btn-blue { background: #3b82f6; color: #fff; }
+.btn-blue:hover { background: #2563eb; }
+.btn-red { background: #ef4444; color: #fff; }
+.btn-red:hover { background: #dc2626; }
+.btn-green { background: #10b981; color: #fff; }
+.btn-green:hover { background: #059669; }
+
+/* --- Flex Utility --- */
+.flex { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+/* --- Filter/Search --- */
+.filter-search { margin-bottom: 15px; }
+
+/* --- Popup --- */
+.popup {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: 0.3s;
+}
+.popup.show { display: flex; opacity: 1; }
+.popup-box {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 12px;
+  text-align: center;
+  min-width: 250px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.popup-box button {
+  margin-top: 12px;
+  background: #3b82f6;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.popup-box button:hover { background: #2563eb; }
+
+/* --- Admin Stats --- */
+.stats { margin-bottom: 15px; }
+.stat-card {
+  background: #fff;
+  padding: 10px 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* --- Responsive --- */
+@media(max-width:600px){
+  .flex { flex-direction: column; align-items: flex-start; }
+  .topbar { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+
+/* --- Pinned Post Indicator for Feed/Admin Cards --- */
+.pinned-indicator {
+  color: #f59e0b;
+  font-size: 14px;
+  margin-left: 6px;
+}
+.post-card {
+  border: 1px solid #ccc;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  position: relative;
+}
