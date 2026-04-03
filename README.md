@@ -7,3 +7,8 @@ making a centralized way of getting news and updates of our College, CVSU-Imus.
 The project may consist of files, images and names protected by copyright laws.
 
 All rights reserved to it's rightful owners.
+
+
+
+Main Developer - Orville Nino Cenaon
+Contributor - Christian Loewen D. Barcena
