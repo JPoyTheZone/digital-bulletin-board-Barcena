@@ -33,6 +33,7 @@
         <option value="all">All Organizations</option>
         <option value="Central Student Government">Central Student Government</option>
         <option value="Computer Science Clique">Computer Science Clique</option>
+		<option value="The Flare">The Flare</option>
       </select>
 
       <input class="search" placeholder="Search..." oninput="renderFeed(this.value)">
@@ -52,8 +53,13 @@
       <option value="Central Student Government">Central Student Government</option>
       <option value="Computer Science Clique">Computer Science Clique</option>
     </select>
-
+	
     <input id="title" placeholder="Title">
+    
+    <p>News Banner Image <input id="banner" type="file" accept="image/*">
+      <img id="bannerpreview" alt="School.jpeg" src="CVSUimus.jpg" style="width: 80%; max-width: 360px; max-height: 200px; object-fit: cover; display: block; margin: 8px auto 0;align-self: center;">
+    </p>
+
     <textarea id="body" placeholder="Content"></textarea>
     <input id="fb" placeholder="Facebook link (optional)">
     <input id="submittedBy" placeholder="Submitted by">
