@@ -10,5 +10,6 @@ All rights reserved to it's rightful owners.
 
 
 
-Main Developer - Orville Nino Cenaon
-Contributor - Christian Loewen D. Barcena
+Main Developer - Orville Nino Cenaon.
+Contributor - Christian Loewen D. Barcena.
+Contributor - Ivan Macas.
